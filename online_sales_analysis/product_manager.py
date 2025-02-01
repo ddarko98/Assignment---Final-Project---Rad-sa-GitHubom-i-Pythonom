@@ -18,6 +18,25 @@ class ProductManager:
         print(f"Proizvod {name} nije pronađen.")
 
 
+class Cart:
+    def __init__(self):
+        self.cart_items = []
+    
+    def add_to_cart(self, product: Product):
+        self.cart_items.append(product)
+        print(f"Proizvod {product.name} je dodat u korpu.")
+    
+    def total_cart_value(self):
+        return sum(product.price for product in self.cart_items)
+    
+    def display_cart(self):
+        if not self.cart_items:
+            print("Korpa je prazna.")
+        else:
+            print("Sadržaj korpe:")
+            for product in self.cart_items:
+                product.display_info()
+
 if __name__ == "__main__":
     pm = ProductManager()
     p1 = Product("Laptop", 75000, 10)
@@ -27,3 +46,11 @@ if __name__ == "__main__":
     pm.add_product(p2)
     pm.display_products()
     pm.total_value()
+
+    cart = Cart()
+    
+    for product in pm.products[:3]:
+        cart.add_to_cart(product)
+    
+    cart.display_cart()
+    print(f"Ukupna vrednost za naplatu: {cart.total_cart_value():.2f} RSD")
